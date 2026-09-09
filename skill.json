@@ -1,0 +1,13 @@
+{
+  "name": "genpark-weisfeiler-lehman-graph-isomorphism-skill",
+  "version": "1.0.0",
+  "description": "1-Weisfeiler-Lehman (1-WL) color refinement graph kernel algorithm computing canonical subtree signatures to test graph isomorphism in O(E).",
+  "topics": [
+    "genpark-skill",
+    "agentic-ai",
+    "weisfeiler-lehman",
+    "graph-isomorphism",
+    "graph-kernel",
+    "graph-neural-networks"
+  ]
+}
