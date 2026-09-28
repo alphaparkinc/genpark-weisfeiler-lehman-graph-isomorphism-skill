@@ -1,30 +1,13 @@
 # genpark-weisfeiler-lehman-graph-isomorphism-skill
 
-[![Agentic Skill](https://img.shields.io/badge/GenPark-Agentic__Skill-blue.svg)](https://github.com/alphaparkinc/genpark-weisfeiler-lehman-graph-isomorphism-skill)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20Pip-orange.svg)](#)
-[![Dual Org Verified](https://img.shields.io/badge/GitHub-Dual__Org-purple.svg)](#)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+Agent Skill implementing the **1-Dimensional Weisfeiler-Lehman (1-WL) Graph Coloring Isomorphism Kernel**, identifying topological equivalence and graph invariants.
 
-> 1-Weisfeiler-Lehman (1-WL) color refinement graph kernel algorithm computing canonical subtree signatures to test graph isomorphism in O(E).
-
-## Architecture Overview
-
+## Architectural Overview
 ```mermaid
 flowchart TD
-    A[Geometric Graph / Manifold Data] -->|Coordinates & Features| B[MCP Server / Client]
-    B --> C[genpark-weisfeiler-lehman-graph-isomorphism-skill Kernel]
-    C --> D[SE(3) Equivariant Aggregations / Poincare Metrics / Riemannian Retraction]
-    D --> E[Isomorphism Invariant & Manifold Embedded Output]
-    E -->|Structured Payload| A
-```
-
-## Features
-- **0 External Pip Dependencies**: Pure Python standard library implementation.
-- **MCP Protocol Ready**: Includes Model Context Protocol server script (`mcp_server.py`).
-- **Production Standard**: Complete geometric consistency tests and exact analytical formulas.
-
-## Quick Start
-```bash
-python example_usage.py
+    Graph["Input Graph Adjacency"] --> Degree["Initialize Colors via Degree C_0(v)"]
+    Degree --> Multiset["Collect & Sort Neighbor Color Multiset"]
+    Multiset --> Hash["Hash: C_{k+1}(v) = Hash(C_k(v), Sorted_Neighbors)"]
+    Hash --> Hist["Compute Canonical Color Frequency Histogram"]
+    Hist --> Compare["Compare Histograms Across Graphs: Equal -> Isomorphic"]
 ```
