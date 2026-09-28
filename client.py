@@ -1,22 +1,33 @@
+"""1-Dimensional Weisfeiler-Lehman (1-WL) Graph Kernel Engine.
+100% Python Standard Library.
+"""
+
+import hashlib
+import collections
+
 class WeisfeilerLehmanKernel:
-    """1-WL color refinement graph isomorphism tester."""
-    def compute_signature(self, adj_list: dict[int, list[int]], initial_colors: dict[int, str], iterations: int = 2) -> dict:
-        colors = dict(initial_colors)
+    """1-WL (Weisfeiler-Lehman) graph coloring isomorphism test."""
+    @staticmethod
+    def get_color_histogram(adj_dict, iterations=2):
+        nodes = sorted(adj_dict.keys())
+        colors = {u: str(len(adj_dict[u])) for u in nodes}
+        histograms = []
+
         for _ in range(iterations):
             new_colors = {}
-            for node, nbrs in adj_list.items():
-                multiset = sorted([colors[nbr] for nbr in nbrs])
-                combined = f"{colors[node]}_" + "-".join(multiset)
-                new_colors[node] = combined
+            for u in nodes:
+                nbr_colors = sorted(colors[v] for v in adj_dict[u])
+                sig = colors[u] + "_" + ",".join(nbr_colors)
+                h = hashlib.md5(sig.encode("utf-8")).hexdigest()[:8]
+                new_colors[u] = h
             colors = new_colors
+            counts = collections.Counter(colors.values())
+            histograms.append(dict(sorted(counts.items())))
 
-        # Histogram of color frequencies
-        hist = {}
-        for c in colors.values():
-            hist[c] = hist.get(c, 0) + 1
+        return histograms
 
-        return {
-            "iterations": iterations,
-            "refined_colors": colors,
-            "graph_feature_vector": hist
-        }
+    @classmethod
+    def are_isomorphic(cls, g1, g2, iterations=3):
+        h1 = cls.get_color_histogram(g1, iterations=iterations)
+        h2 = cls.get_color_histogram(g2, iterations=iterations)
+        return h1 == h2
