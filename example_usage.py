@@ -1,16 +1,8 @@
 from client import WeisfeilerLehmanKernel
 
-def main():
-    print("=== Weisfeiler-Lehman (1-WL) Graph Kernel ===")
-    wl = WeisfeilerLehmanKernel()
-    adj = {0: [1], 1: [0, 2], 2: [1]}
-    colors = {0: "C1", 1: "C2", 2: "C1"}
+g1 = {"A": ["B", "C"], "B": ["A", "C"], "C": ["A", "B"]}
+g2 = {1: [2, 3], 2: [1, 3], 3: [1, 2]}
+g3 = {1: [2], 2: [1, 3], 3: [2]}
 
-    res = wl.compute_signature(adj, colors, iterations=2)
-    print("WL Signature Result:", res)
-    assert len(res["refined_colors"]) == 3
-
-    print("Weisfeiler-Lehman Kernel verified successfully!")
-
-if __name__ == "__main__":
-    main()
+print("Isomorphic Check (g1 ~ g2):", WeisfeilerLehmanKernel.are_isomorphic(g1, g2))
+print("Isomorphic Check (g1 ~ g3):", WeisfeilerLehmanKernel.are_isomorphic(g1, g3))
